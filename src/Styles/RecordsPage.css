@@ -1,0 +1,51 @@
+ul {
+    list-style-type: none;
+    padding-inline-end: 40px;
+}
+
+li {
+    height: 40px;
+    background-color: lightgoldenrodyellow;
+    margin-bottom: 20px;
+    display: flex;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+    border-radius: 10px;
+}
+
+li.gold {
+    background-color: gold;
+}
+
+    li.silver {
+        background-color: silver;
+    }
+
+    li.bronse {
+        background-color: sandybrown;
+    }
+
+.record-player-name {
+    margin-left: 20px;
+}
+
+@media (max-width: 490px) {
+    .players-container {
+        flex-direction: column;
+    }
+
+    ul {
+        list-style-type: none;
+        padding-inline-end: 10px;
+        padding-inline-start: 10px;
+    }
+
+    li {
+        height: 92px;
+        padding-left: 0px;
+        flex-direction: column;
+        align-items: center;
+    }
+}

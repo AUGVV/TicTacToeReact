@@ -1,18 +1,25 @@
 import { observer } from "mobx-react";
-import { gameStore } from "../Stores/GameStore";
+import PlayerInfoStore from "../Stores/PlayerInfoStore";
 
 type Props = {
-    playerIndex: number;
-    playerName: string;
+    index: number;
+    record: PlayerInfoStore;
 };
 
-const RecordField = observer(({ playerName, playerIndex }: Props) => {
+const RecordField = observer(({ record, index }: Props) => {
     return (
-        <div className={playerIndex == 0 ? "player red" : "player blue"} >
-            <p>{playerName}</p>
-            <p>Count of wins: {gameStore.Players[playerIndex].WonGames}</p>
-            <p>Total moves: {gameStore.Players[playerIndex].StepsTaken}</p>
-        </div>
+        <li className={index === 1
+            ? "gold"
+            : index === 2
+                ? "silver"
+                : index === 3
+                    ? "bronse"
+                    : ""}>
+            <p>{index}</p>
+            <p className="record-player-name">{record.PlayerName}</p>
+            <p className="record-wins">Wins: {record.WonGames}</p>
+            <p className="record-moves">Moves: {record.StepsTaken}</p>
+        </li>
     );
 })
 

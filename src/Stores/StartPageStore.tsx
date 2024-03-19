@@ -1,12 +1,19 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import React from "react";
-import { PlayerListStorage } from "../Constants/StorageConstants";
+import { GameStateStorage, PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
 import GamePreparePreviousState from "../Entity/GamePreparePreviousState";
+import GlobalStatesStoreEntity from "../Entity/GlobalStatesStoreEntity";
+import PageEnum from "../Enum/PageEnum";
+import { globalStatesStore } from "./GlobalStatesStore";
 import PlayerInfoStore from "./PlayerInfoStore";
 
-class GamePrepareStore {
+class StartPageStore {
     constructor() {
         makeAutoObservable(this);
+        let gameState = sessionStorage.getItem(GameStateStorage);
+        if (gameState === null) {
+            sessionStorage.setItem(GameStateStorage, JSON.stringify(new GlobalStatesStoreEntity(false, PageEnum.StartPage)));
+        }
     }
 
     @observable allPlayersExist = false;
@@ -34,38 +41,52 @@ class GamePrepareStore {
     }
 
     @action SetPreviousState: any = (
-        previousState: GamePreparePreviousState,
         sizeInput: React.RefObject<HTMLInputElement>,
         player1: React.RefObject<HTMLInputElement>,
         player2: React.RefObject<HTMLInputElement>) => {
 
-        if (player1.current != null) {
-            player1.current.value = previousState.player1Name;
-        }
-        if (player2.current != null) {
-            player2.current.value = previousState.player2Name;
-        }
-        if (sizeInput.current != null) {
-            sizeInput.current.value = previousState.fieldSize.toString();
-        }
+        let previousStateJson = sessionStorage.getItem(PrepareGameStorage);
+        if (previousStateJson !== null) {
+            let previousState = JSON.parse(previousStateJson) as GamePreparePreviousState;
 
-        this.allPlayersExist = true;
+            if (player1.current != undefined) {
+                player1.current.value = previousState.player1Name;
+            }
+            if (player2.current != undefined) {
+                player2.current.value = previousState.player2Name;
+            }
+            if (sizeInput.current != undefined) {
+                sizeInput.current.value = previousState.fieldSize.toString();
+            }
+
+            this.allPlayersExist = true;
+        }
     }
 
-    @action SavePlayers: any = (
+    @action SaveStartData: any = (
+        sizeInput: React.RefObject<HTMLInputElement>,
         player1: React.RefObject<HTMLInputElement>,
-        player2: React.RefObject<HTMLInputElement>) =>
-    {
+        player2: React.RefObject<HTMLInputElement>) => {
+
+        if (player1.current != undefined && player2.current != undefined && sizeInput.current != undefined) {
+            let previousState = new GamePreparePreviousState(
+                player1.current.value,
+                player2.current.value,
+                Number(sizeInput.current.value));
+
+            sessionStorage.setItem(PrepareGameStorage, JSON.stringify(previousState));
+        }
+
         let playerJson = sessionStorage.getItem(PlayerListStorage);
         if (playerJson !== null) {
             let playerList: PlayerInfoStore[] = JSON.parse(playerJson);
             var playerExist1 = playerList.find((elem) => elem.PlayerName === player1?.current?.value);
             if (playerExist1 === undefined) {
-                playerList.push(new PlayerInfoStore(player1?.current?.value ?? 'unknown', 0, 0));
+                playerList.push(new PlayerInfoStore(player1!.current!.value, 0, 0));
             }
             var playerExist2 = playerList.find((elem) => elem.PlayerName === player2?.current?.value);
             if (playerExist2 === undefined) {
-                playerList.push(new PlayerInfoStore(player2?.current?.value ?? 'unknown', 0, 0));
+                playerList.push(new PlayerInfoStore(player2!.current!.value, 0, 0));
             }
             if (playerExist2 === undefined || playerExist1 === undefined) {
                 sessionStorage.setItem(PlayerListStorage, JSON.stringify(playerList));
@@ -73,11 +94,13 @@ class GamePrepareStore {
         }
         else {
             let playerList = new Array();
-            playerList.push(new PlayerInfoStore(player1?.current?.value ?? 'unknown', 0, 0));
-            playerList.push(new PlayerInfoStore(player2?.current?.value ?? 'unknown', 0, 0));
+            playerList.push(new PlayerInfoStore(player1!.current!.value, 0, 0));
+            playerList.push(new PlayerInfoStore(player2!.current!.value, 0, 0));
             sessionStorage.setItem(PlayerListStorage, JSON.stringify(playerList));
         }
+
+        globalStatesStore.StartGameSession();
     }
 }
 
-export const gamePrepareStore = new GamePrepareStore();
+export const startPageStore = new StartPageStore();

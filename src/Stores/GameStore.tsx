@@ -1,7 +1,8 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
-import { PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
+import { GameStateStorage, PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
 import FieldObject from "../Entity/FieldObject";
 import GamePreparePreviousState from "../Entity/GamePreparePreviousState";
+import GlobalStatesStoreEntity from "../Entity/GlobalStatesStoreEntity";
 import Color from "../Enum/Color";
 import GameStateStore from "./GameStateStore";
 import PlayerInfoStore from "./PlayerInfoStore";
@@ -41,6 +42,16 @@ class GameStore {
 
     @observable CurrentPlayer = 0;
 
+    @action IsGameStarted: any = () => {
+        let gameStateJson = sessionStorage.getItem(GameStateStorage);
+        if (gameStateJson === null) {
+            return false;
+        }
+        let gameState: GlobalStatesStoreEntity = JSON.parse(gameStateJson);
+
+        return gameState.isGameRun;
+    }
+
     @action CreateFieldsArray: any = (fieldsSize: number) => {
         const fieldCount = fieldsSize;
 
@@ -56,6 +67,7 @@ class GameStore {
     @action Restart: any = () => {
         this.GameState = new GameStateStore(undefined, false);
         this.FieldsArray = this.CreateFieldsArray(this.GameSize * this.GameSize);
+        this.CurrentPlayer = 0;
     }
 
     @action click: any = (index: number) => {
