@@ -1,7 +1,7 @@
 import '../Styles/App.css';
-import WinField from '../Component/WinField';
-import GameField from '../Component/GameField';
-import PlayerInfoBar from '../Component/PlayerInfoBar';
+import WinField from '../Components/WinField';
+import GameField from '../Components/GameField';
+import PlayerInfoBar from '../Components/PlayerInfoBar';
 import { observer } from 'mobx-react';
 import { gameStore } from "../Stores/GameStore";
 import { useEffect } from 'react';
@@ -16,8 +16,8 @@ const Game = observer(() => {
         }
 
         gameStore.InitPage();
+        console.log(gameStore.WinMatrix)
     }, []);
-
 
   return (
     <div className="App">

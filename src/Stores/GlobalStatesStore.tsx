@@ -16,28 +16,28 @@ class GlobalStatesStore {
     @action StartGameSession: any = () => {
 		this.isGameRun = true;
 		this.currentPage = PageEnum.GamePage;
-		this.SetSession();
+		this.SetNewSessionStorageValue();
 	}
 
 	@action EndGameSession: any = () => {
 		this.isGameRun = false;
 		this.currentPage = PageEnum.StartPage;
-		this.SetSession();
+		this.SetNewSessionStorageValue();
 	}
 
 	@action GoToGamePage: any = () => {
 		this.currentPage = PageEnum.GamePage;
-		this.SetSession();
+		this.SetNewSessionStorageValue();
 	}
 
 	@action GoToStartPage: any = () => {
 		this.currentPage = PageEnum.StartPage;
-		this.SetSession();
+		this.SetNewSessionStorageValue();
 	}
 
 	@action GoToRecordsPage: any = () => {
 		this.currentPage = PageEnum.RecordPage;
-		this.SetSession();
+		this.SetNewSessionStorageValue();
 	}
 
 	@action SetPreviousState: any = () => {
@@ -49,7 +49,7 @@ class GlobalStatesStore {
 		}
 	}
 
-	SetSession() {
+	SetNewSessionStorageValue() {
 		sessionStorage.setItem(GameStateStorage, JSON.stringify(new GlobalStatesStoreEntity(this.isGameRun, this.currentPage)));
     }
 }

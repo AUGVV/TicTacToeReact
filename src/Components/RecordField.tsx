@@ -6,7 +6,7 @@ type Props = {
     record: PlayerInfoStore;
 };
 
-const RecordField = observer(({ record, index }: Props) => {
+const RecordField = ({ record, index }: Props) => {
     return (
         <li className={index === 1
             ? "gold"
@@ -21,6 +21,6 @@ const RecordField = observer(({ record, index }: Props) => {
             <p className="record-moves">Moves: {record.StepsTaken}</p>
         </li>
     );
-})
+}
 
 export default RecordField;

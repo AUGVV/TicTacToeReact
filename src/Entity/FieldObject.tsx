@@ -4,13 +4,13 @@ class FieldObject {
 	value: string;
 	player: string | null;
 	index: number | null;
-	colorClass: Color;
+	color: Color;
 
-	constructor(value: string, player: string | null, index: number, colorClass: Color) {
+	constructor(value: string, player: string | null, index: number, color: Color) {
 		this.value = value;
 		this.player = player;
 		this.index = index;
-		this.colorClass = colorClass;
+		this.color = color;
 	}
 }
 

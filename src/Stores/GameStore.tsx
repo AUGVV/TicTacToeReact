@@ -35,7 +35,7 @@ class GameStore {
             }
         }
         this.FieldsArray = this.CreateFieldsArray(this.GameSize * this.GameSize);
-        this.SetWinMatrix();
+        this.WinMatrix = this.SetWinMatrix();
     }
 
     @observable GameState = new GameStateStore(undefined, false);
@@ -126,25 +126,7 @@ class GameStore {
         return matrix;
     }
 
-    @computed WinMatrix = this.SetWinMatrix();
-
-    @action ColorControl: any = (field: FieldObject, gameState: GameStateStore) => {
-        let result = field.value.length == 0 ?
-            (!gameState.IsGameEnded ? ' clickable' : '')
-            : '';
-        result += field.colorClass == Color.blue ? ' blue' : '';
-
-        if (this.CurrentPlayer == 1 && field.colorClass == Color.red) {
-            result += ' blue';
-            field.colorClass = Color.blue
-        }
-        else {
-            result += ' red';
-            field.colorClass = Color.red
-        }
-
-        return result;
-    }
+    WinMatrix = this.SetWinMatrix();
 
     @action ChangeStatesIfWin: any = () => {
         let winner = this.CheckWinner();
@@ -198,7 +180,7 @@ class GameStore {
     @action AddColorToFields: any = (partOfMatrix: Array<number>) => {
         this.FieldsArray
             .filter((elem: FieldObject) => partOfMatrix.includes(elem.index ?? 0))
-            .forEach((elem: FieldObject) => elem.colorClass = Color.green);
+            .forEach((elem: FieldObject) => elem.color = Color.green);
     }
 
     @action IsOnlyOneTypeInLine: any = (partOfMatrix: Array<number>, type: string) => {

@@ -2,7 +2,7 @@ import '../Styles/StartPage.css';
 import { observer } from "mobx-react";
 import { startPageStore } from "../Stores/StartPageStore";
 import { useEffect, useRef } from "react";
-import AddPlayer from "../Component/AddPlayer";
+import AddPlayer from "../Components/AddPlayer";
 import { useNavigate } from "react-router-dom";
 
 const StartPage = observer(() => {

@@ -3,13 +3,12 @@ import { PlayerListStorage } from "../Constants/StorageConstants";
 import PlayerInfoStore from "./PlayerInfoStore";
 
 class RecordsStore {
-    @observable RecordList = new Array();
-
     constructor() {
         makeAutoObservable(this);
     }
+    @observable RecordList = new Array();
 
-    @action InitRecordList() {
+    @action GetRecordList() {
         let playerJson = sessionStorage.getItem(PlayerListStorage);
         if (playerJson !== null) {
             let playerList = JSON.parse(playerJson) as PlayerInfoStore[];
