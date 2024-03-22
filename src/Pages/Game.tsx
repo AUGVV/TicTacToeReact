@@ -16,7 +16,6 @@ const Game = observer(() => {
         }
 
         gameStore.InitPage();
-        console.log(gameStore.WinMatrix)
     }, []);
 
   return (
