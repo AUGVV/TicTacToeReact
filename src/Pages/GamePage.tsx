@@ -1,31 +1,34 @@
 import '../Styles/App.css';
-import WinField from '../Components/WinField';
-import GameField from '../Components/GameField';
-import PlayerInfoBar from '../Components/PlayerInfoBar';
+
 import { observer } from 'mobx-react';
 import { gameStore } from "../Stores/GameStore";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import WinField from './Components/GamePage/WinField';
+import GameField from './Components/GamePage/GameField';
+import { globalStatesStore } from '../Stores/GlobalStatesStore';
 
 const Game = observer(() => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(Boolean(gameStore.IsGameStarted));
+
         if (!Boolean(gameStore.IsGameStarted)) {
             navigate('/');
         }
 
         gameStore.InitPage();
+
+        // Required to change nav menu when changing the route in the browser.
+        globalStatesStore.SetPreviousState();
+        globalStatesStore.GoToGamePage();
     }, []);
 
   return (
     <div className="App">
           <main>
-              <div className="container">
-                  <PlayerInfoBar playerName={gameStore.Players[0].PlayerName + ' (X)'} playerIndex={0} />
-                  <GameField />
-                  <PlayerInfoBar playerName={gameStore.Players[1].PlayerName + ' (O)'} playerIndex={1} />
-              </div>
+              <GameField />
               <WinField />
           </main>
     </div>

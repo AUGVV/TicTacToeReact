@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
-import { gameStore } from '../Stores/GameStore';
-import StyledButton from '../StyledComponents/StyledButton';
+import { gameStore } from '../../../Stores/GameStore';
+import StyledButton from '../../../StyledComponents/StyledButton';
 
 type Props = {
     index: number;
@@ -14,8 +14,8 @@ const Field = observer(({ index }: Props) => {
 
     return (
         <StyledButton
-            fieldColor={gameStore.FieldsArray[index].color}
-            isLocked={gameStore.FieldsArray[index].value.length > 0}
+            fieldcolor={gameStore.FieldsArray[index].color}
+            islocked={gameStore.FieldsArray[index].value.length > 0}
             currentState={gameStore.CurrentPlayer}
             onClick={() => ClickHandle()}>{gameStore.FieldsArray[index].value}</StyledButton>
     );

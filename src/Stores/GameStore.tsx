@@ -1,4 +1,4 @@
-import { action, computed, makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { GameStateStorage, PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
 import FieldObject from "../Entity/FieldObject";
 import GamePreparePreviousState from "../Entity/GamePreparePreviousState";
@@ -94,7 +94,7 @@ class GameStore {
         }
     }
 
-    @action SetWinMatrix: any = () => {
+    SetWinMatrix: any = () => {
         let horizontalLines = new Array();
         let verticalLines = new Array();
         let otherLines1 = new Array();
@@ -162,7 +162,7 @@ class GameStore {
         return this.GameState.IsGameEnded != undefined && !this.GameState.IsGameEnded
     }
 
-    @action CheckWinner: any = () => {
+    CheckWinner: any = () => {
         for (let i = 0; i < this.WinMatrix.length; i++) {
             if (this.IsOnlyOneTypeInLine(this.WinMatrix[i], 'o')) {
                 this.AddColorToFields(this.WinMatrix[i])
@@ -177,13 +177,13 @@ class GameStore {
         return false;
     }
 
-    @action AddColorToFields: any = (partOfMatrix: Array<number>) => {
+    AddColorToFields: any = (partOfMatrix: Array<number>) => {
         this.FieldsArray
             .filter((elem: FieldObject) => partOfMatrix.includes(elem.index ?? 0))
             .forEach((elem: FieldObject) => elem.color = Color.green);
     }
 
-    @action IsOnlyOneTypeInLine: any = (partOfMatrix: Array<number>, type: string) => {
+    IsOnlyOneTypeInLine: any = (partOfMatrix: Array<number>, type: string) => {
         return this.FieldsArray
             .filter((elem: FieldObject) => partOfMatrix.includes(elem.index ?? 0))
             .every((elem: FieldObject) => elem.value == type);

@@ -1,5 +1,4 @@
-import { observer } from "mobx-react";
-import PlayerInfoStore from "../Stores/PlayerInfoStore";
+import PlayerInfoStore from "../../../Stores/PlayerInfoStore";
 
 type Props = {
     index: number;

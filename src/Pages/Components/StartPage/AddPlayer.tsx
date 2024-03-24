@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import { addPlayerStore } from "../Stores/AddPlayerStore";
+import { addPlayerStore } from "../../../Stores/AddPlayerStore";
 
 type Props = {
     PlayerTitle: string;

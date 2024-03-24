@@ -1,9 +1,9 @@
 import '../Styles/RecordsPage.css';
 import { observer } from "mobx-react";
-import RecordField from "../Components/RecordField";
 import { recordsStore } from "../Stores/RecordsStore";
 import { useEffect } from 'react';
 import { globalStatesStore } from '../Stores/GlobalStatesStore';
+import RecordField from './Components/RecordPage/RecordField';
 
 const Records = observer(() => {
     let records = new Array();

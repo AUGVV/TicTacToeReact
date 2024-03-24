@@ -2,48 +2,30 @@ import '../Styles/StartPage.css';
 import { observer } from "mobx-react";
 import { startPageStore } from "../Stores/StartPageStore";
 import { useEffect, useRef } from "react";
-import AddPlayer from "../Components/AddPlayer";
 import { useNavigate } from "react-router-dom";
+import AddPlayer from './Components/StartPage/AddPlayer';
+import { globalStatesStore } from '../Stores/GlobalStatesStore';
+import PlayersBar from './Components/StartPage/PlayersBar';
+import GameRuleBar from './Components/StartPage/GameRuleBar';
 
 const StartPage = observer(() => {
-    const sizeRef = useRef<HTMLInputElement>(null);
     const player1Ref = useRef<HTMLInputElement>(null);
     const player2Ref = useRef<HTMLInputElement>(null);
-
-    const navigate = useNavigate();
+    const sizeRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         startPageStore.SetPreviousState(sizeRef, player1Ref, player2Ref);
-    }, []);
 
-    function saveStateAndStartGame() {
-        startPageStore.SaveStartData(sizeRef, player1Ref, player2Ref);
-        navigate('/game');
-    }
+        // Required to change nav menu when changing the route in the browser.
+        globalStatesStore.SetPreviousState();
+        globalStatesStore.GoToStartPage();
+    }, []);
 
     return (
         <>
-            <div className="players-container">
-                <AddPlayer PlayerTitle="Player 1" OnChange={() => startPageStore.updateUserFields(player1Ref, player2Ref)} Ref={player1Ref} />
-                <pre className="vs-title">  VS  </pre>
-                <AddPlayer PlayerTitle="Player 2" OnChange={() => startPageStore.updateUserFields(player1Ref, player2Ref)} Ref={player2Ref} />
-            </div>
-            <div className="start-container">
-                <input
-                    className="size-input"
-                    ref={sizeRef}
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    min="3"
-                    max="9"
-                    defaultValue="3"
-                    onChange={() => startPageStore.TurnNumberInValidState(sizeRef)} />
-                {!startPageStore.allPlayersExist
-                    ? <p className="red">Not all players join the Game</p>
-                    : <button className="play-button" onClick={saveStateAndStartGame}>Play</button>}
-            </div>
-            </>);
+            <PlayersBar player1Ref={player1Ref} player2Ref={player2Ref} />
+            <GameRuleBar player1Ref={player1Ref} player2Ref={player2Ref} sizeRef={sizeRef} />
+        </>);
 })
 
 export default StartPage;

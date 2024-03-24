@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import { gameStore } from "../Stores/GameStore";
+import { gameStore } from "../../../Stores/GameStore";
 
 type Props = {
     playerIndex: number;

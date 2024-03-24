@@ -3,19 +3,20 @@ import Color from "../Enum/Color";
 
 interface Props {
     currentState: number;
-    isLocked: boolean;
-    fieldColor: Color;
+    islocked: boolean;
+    fieldcolor: Color;
 }
 
 const StyledButton = styled.button<Props>
         `width: 100%;
          height: 100%;
          background-color: transparent;
-         color: ${props => props.fieldColor === Color.green ? `green;` : `black;`}
+         color: ${props => props.fieldcolor === Color.green ? `green;` : `black;`}
          border: 1px solid;
          font-size: calc(4em - 200%);
          text-align: center;
-         ${props => !props.isLocked ? props.currentState == 0 ?
+;
+         ${props => !props.islocked ? props.currentState == 0 ?
          `&:hover::after {
             content: "X";
             background-color: red;
