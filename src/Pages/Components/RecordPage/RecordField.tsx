@@ -1,4 +1,5 @@
 import PlayerInfoStore from "../../../Stores/PlayerInfoStore";
+import LiRecord from "../../../StyledComponents/LiRecord";
 
 type Props = {
     index: number;
@@ -7,18 +8,12 @@ type Props = {
 
 const RecordField = ({ record, index }: Props) => {
     return (
-        <li className={index === 1
-            ? "gold"
-            : index === 2
-                ? "silver"
-                : index === 3
-                    ? "bronse"
-                    : ""}>
+        <LiRecord position={index} >
             <p>{index}</p>
-            <p className="record-player-name">{record.PlayerName}</p>
-            <p className="record-wins">Wins: {record.WonGames}</p>
-            <p className="record-moves">Moves: {record.StepsTaken}</p>
-        </li>
+            <p>{record.PlayerName}</p>
+            <p>Wins: {record.WonGames}</p>
+            <p>Moves: {record.StepsTaken}</p>
+        </LiRecord>
     );
 }
 

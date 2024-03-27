@@ -12,12 +12,16 @@ const Field = observer(({ index }: Props) => {
         gameStore.click(index + 1)
     }
 
+    const value = gameStore.FieldsArray[index].value;
+    const color = gameStore.FieldsArray[index].color;
+    const isLocked = gameStore.FieldsArray[index].value.length > 0;
+
     return (
         <StyledButton
-            fieldcolor={gameStore.FieldsArray[index].color}
-            islocked={gameStore.FieldsArray[index].value.length > 0}
+            fieldcolor={color}
+            islocked={isLocked}
             currentState={gameStore.CurrentPlayer}
-            onClick={() => ClickHandle()}>{gameStore.FieldsArray[index].value}</StyledButton>
+            onClick={() => ClickHandle()}>{value}</StyledButton>
     );
 })
 

@@ -1,18 +1,24 @@
 import { observer } from "mobx-react";
 import { gameStore } from "../../../Stores/GameStore";
 
+import PlayerContainer from "../../../StyledComponents/PlayerContainer";
+
 type Props = {
     playerIndex: number;
     playerName: string;
 };
 
 const PlayerInfoBar = observer(({ playerName, playerIndex }: Props) => {
+
+    const wonGames = gameStore.Players[playerIndex].WonGames;
+    const stepsTaken = gameStore.Players[playerIndex].StepsTaken;
+
     return (
-        <div className={playerIndex == 0 ? "player red" : "player blue"} >
+        <PlayerContainer ingame={true} player={playerIndex} >
             <p>{playerName}</p>
-            <p>Count of wins: {gameStore.Players[playerIndex].WonGames}</p>
-            <p>Total moves: {gameStore.Players[playerIndex].StepsTaken}</p>
-        </div>
+            <p>Count of wins: {wonGames}</p>
+            <p>Total moves: {stepsTaken}</p>
+        </PlayerContainer>
 	);
 })
 

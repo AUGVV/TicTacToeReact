@@ -1,5 +1,8 @@
 import { observer } from "mobx-react";
 import { startPageStore } from "../../../Stores/StartPageStore";
+
+import PlayersContainer from "../../../StyledComponents/PlayersContainer";
+import VsTitle from "../../../StyledComponents/VsTitle";
 import AddPlayer from "./AddPlayer";
 
 type Props = {
@@ -9,11 +12,11 @@ type Props = {
 
 const PlayersBar = observer(({ player1Ref, player2Ref }: Props) => {
     return (
-        <div className="players-container">
+        <PlayersContainer>
             <AddPlayer PlayerTitle="Player 1" OnChange={() => startPageStore.updateUserFields(player1Ref, player2Ref)} Ref={player1Ref} />
-            <pre className="vs-title">  VS  </pre>
+            <VsTitle>  VS  </VsTitle>
             <AddPlayer PlayerTitle="Player 2" OnChange={() => startPageStore.updateUserFields(player1Ref, player2Ref)} Ref={player2Ref} />
-        </div>
+        </PlayersContainer>
     );
 });
 

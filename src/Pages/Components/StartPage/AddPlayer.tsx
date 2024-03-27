@@ -1,6 +1,9 @@
 import { observer } from "mobx-react";
 import { addPlayerStore } from "../../../Stores/AddPlayerStore";
 
+import PlayerContainer from "../../../StyledComponents/PlayerContainer";
+import PlayerNameInput from "../../../StyledComponents/PlayerNameInput";
+
 type Props = {
     PlayerTitle: string;
     OnChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -8,12 +11,15 @@ type Props = {
 };
 
 const AddPlayer = observer(({ OnChange, PlayerTitle, Ref }: Props) => {
+    const alreadyText = addPlayerStore.IsPlayerAlreadyExist ? (<p>Exist</p>) : null;
+    const playerIndex = PlayerTitle == "Player 1" ? 0 : 1;
+
     return (
-        <div className={"player-container" + (PlayerTitle == "Player 1" ? " red" : " blue") }>
+        <PlayerContainer ingame={false} player={playerIndex}>
             <p>{PlayerTitle}</p>
-            {addPlayerStore.IsPlayerAlreadyExist ? <p>already exist</p> : null}
-            <input className="player-name-input" maxLength={10} placeholder="Write your name here" ref={Ref} onChange={OnChange} onBeforeInput={() => addPlayerStore.updateUserFields(Ref)} />
-        </ div>
+            {alreadyText}
+            <PlayerNameInput maxLength={10} placeholder="Write your name here" ref={Ref} onChange={OnChange} />
+        </ PlayerContainer>
     );
 });
 

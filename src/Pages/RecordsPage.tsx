@@ -1,9 +1,10 @@
-import '../Styles/RecordsPage.css';
 import { observer } from "mobx-react";
 import { recordsStore } from "../Stores/RecordsStore";
 import { useEffect } from 'react';
 import { globalStatesStore } from '../Stores/GlobalStatesStore';
+
 import RecordField from './Components/RecordPage/RecordField';
+import UlRecord from '../StyledComponents/UlRecord';
 
 const Records = observer(() => {
     let records = new Array();
@@ -19,9 +20,9 @@ const Records = observer(() => {
     }, []);
 
     return (<>
-        <ul>
+        <UlRecord>
             {records}
-        </ul>
+        </UlRecord>
     </>);
 })
 

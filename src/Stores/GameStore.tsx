@@ -1,10 +1,8 @@
-import { action, makeAutoObservable, observable } from "mobx";
-import { GlobalStateStorage, PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
+import { action, makeObservable, observable } from "mobx";
+import { PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
 import FieldObject from "../Entity/FieldObject";
 import GamePreparePreviousState from "../Entity/GamePreparePreviousState";
-import GlobalStatesStoreEntity from "../Entity/GlobalStatesStoreEntity";
 import Color from "../Enum/Color";
-import PageEnum from "../Enum/PageEnum";
 import GameStateStore from "./GameStateStore";
 import PlayerInfoStore from "./PlayerInfoStore";
 
@@ -18,7 +16,7 @@ class GameStore {
     @observable FieldsArray = new Array();
 
     constructor() {
-        makeAutoObservable(this);
+        makeObservable(this);
     }
 
     @action InitPage: any = () => {

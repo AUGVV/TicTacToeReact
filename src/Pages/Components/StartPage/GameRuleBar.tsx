@@ -1,7 +1,11 @@
 import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
-import { gameStore } from "../../../Stores/GameStore";
 import { startPageStore } from "../../../Stores/StartPageStore";
+
+import PlayButton from "../../../StyledComponents/PlayButton";
+import RedText from "../../../StyledComponents/RedText";
+import SizeInput from "../../../StyledComponents/SizeInput";
+import StartContainer from "../../../StyledComponents/StartContainer";
 
 type Props = {
     player1Ref: React.RefObject<HTMLInputElement>,
@@ -18,9 +22,8 @@ const GameRuleBar = observer(({ player1Ref, player2Ref, sizeRef }: Props) => {
     }
 
     return (
-        <div className="start-container">
-            <input
-                className="size-input"
+        <StartContainer>
+            <SizeInput
                 ref={sizeRef}
                 type="number"
                 id="quantity"
@@ -30,9 +33,9 @@ const GameRuleBar = observer(({ player1Ref, player2Ref, sizeRef }: Props) => {
                 defaultValue="3"
                 onChange={() => startPageStore.TurnNumberInValidState(sizeRef)} />
             {!startPageStore.allPlayersExist
-                ? <p className="red">Not all players join the Game</p>
-                : <button className="play-button" onClick={saveStateAndStartGame}>Play</button>}
-        </div>
+                ? <RedText>Not all players join the Game</RedText>
+                : <PlayButton onClick={saveStateAndStartGame}>Play</PlayButton>}
+        </StartContainer>
     );
 });
 
