@@ -1,6 +1,6 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import React from "react";
-import { GameStateStorage, PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
+import { GlobalStateStorage, PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
 import GamePreparePreviousState from "../Entity/GamePreparePreviousState";
 import GlobalStatesStoreEntity from "../Entity/GlobalStatesStoreEntity";
 import PageEnum from "../Enum/PageEnum";
@@ -10,9 +10,9 @@ import PlayerInfoStore from "./PlayerInfoStore";
 class StartPageStore {
     constructor() {
         makeAutoObservable(this);
-        let gameState = sessionStorage.getItem(GameStateStorage);
+        let gameState = sessionStorage.getItem(GlobalStateStorage);
         if (gameState === null) {
-            sessionStorage.setItem(GameStateStorage, JSON.stringify(new GlobalStatesStoreEntity(false, PageEnum.StartPage)));
+            sessionStorage.setItem(GlobalStateStorage, JSON.stringify(new GlobalStatesStoreEntity(false, PageEnum.StartPage)));
         }
     }
 

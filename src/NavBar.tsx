@@ -1,56 +1,45 @@
+import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
 import PageEnum from "./Enum/PageEnum";
 import { gameStore } from "./Stores/GameStore";
 import { globalStatesStore } from "./Stores/GlobalStatesStore";
+import NavButton from "./StyledComponents/NavButton";
 
-type Props = {
-    player1Ref: React.RefObject<HTMLInputElement>,
-    player2Ref: React.RefObject<HTMLInputElement>,
-    sizeRef: React.RefObject<HTMLInputElement>
-};
-
-const GameRuleBar = () => {
+const GameRuleBar = observer(() => {
     const navigate = useNavigate();
 
     function EndGame() {
         globalStatesStore.EndGameSession();
-        gameStore.IsGameStarted = false;
         gameStore.Restart();
         navigate('/')
     }
 
     function GoToStart() {
-        globalStatesStore.GoToStartPage();
+        globalStatesStore.InitStartPage();
         navigate('/');
     }
 
     function GoToRecords() {
-        globalStatesStore.GoToRecordsPage();
+        globalStatesStore.InitRecordsPage();
         navigate('/Records')
     }
 
     function GoToGame() {
-        globalStatesStore.GoToGamePage();
+        globalStatesStore.InitGamePage();
         navigate('/game')
     }
 
     return (
         <nav>
             {!globalStatesStore.isGameRun
-                ? (<button
-                    className={"link-button" + (globalStatesStore.currentPage === PageEnum.StartPage ? " white" : "")}
-                    onClick={() => GoToStart()}>Start Page</button>)
-                : (<button className="link-button" onClick={() => EndGame()}>End game</button>)}
+                ? (<NavButton iswhite={String(globalStatesStore.currentPage === PageEnum.StartPage)} onClick={() => GoToStart()}>Start Page</NavButton>)
+                : (<NavButton iswhite="false" onClick={() => EndGame()}>End game</NavButton>)}
             {globalStatesStore.isGameRun
-                ? (<button
-                    className={"link-button" + (globalStatesStore.currentPage === PageEnum.GamePage ? " white" : "")}
-                    onClick={() => GoToGame()}>Game</button>)
+                ? (<NavButton iswhite={String(globalStatesStore.currentPage === PageEnum.GamePage)} onClick={() => GoToGame()}>Game</NavButton>)
                 : null}
-            <button
-                className={"link-button" + (globalStatesStore.currentPage === PageEnum.RecordPage ? " white" : "")}
-                onClick={() => GoToRecords()}>Records</button>
+            <NavButton iswhite={String(globalStatesStore.currentPage === PageEnum.RecordPage)} onClick={() => GoToRecords()}>Records</NavButton>
         </nav>
     );
-};
+});
 
 export default GameRuleBar;

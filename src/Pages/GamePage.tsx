@@ -12,17 +12,14 @@ const Game = observer(() => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(Boolean(gameStore.IsGameStarted));
+        // Required to change nav menu when changing the route in the browser.
+        globalStatesStore.InitGamePage();
 
-        if (!Boolean(gameStore.IsGameStarted)) {
+        if (!globalStatesStore.isGameRun) {
             navigate('/');
         }
 
         gameStore.InitPage();
-
-        // Required to change nav menu when changing the route in the browser.
-        globalStatesStore.SetPreviousState();
-        globalStatesStore.GoToGamePage();
     }, []);
 
   return (

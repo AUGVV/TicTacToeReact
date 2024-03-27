@@ -1,3 +1,4 @@
+import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
 import { gameStore } from "../../../Stores/GameStore";
 import { startPageStore } from "../../../Stores/StartPageStore";
@@ -8,12 +9,11 @@ type Props = {
     sizeRef: React.RefObject<HTMLInputElement>
 };
 
-const GameRuleBar = ({ player1Ref, player2Ref, sizeRef }: Props) => {
+const GameRuleBar = observer(({ player1Ref, player2Ref, sizeRef }: Props) => {
     const navigate = useNavigate();
 
     function saveStateAndStartGame() {
         startPageStore.SaveStartData(sizeRef, player1Ref, player2Ref);
-        gameStore.IsGameStarted = true;
         navigate('/game');
     }
 
@@ -34,6 +34,6 @@ const GameRuleBar = ({ player1Ref, player2Ref, sizeRef }: Props) => {
                 : <button className="play-button" onClick={saveStateAndStartGame}>Play</button>}
         </div>
     );
-};
+});
 
 export default GameRuleBar;

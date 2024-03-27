@@ -1,9 +1,10 @@
 import { action, makeAutoObservable, observable } from "mobx";
-import { GameStateStorage, PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
+import { GlobalStateStorage, PlayerListStorage, PrepareGameStorage } from "../Constants/StorageConstants";
 import FieldObject from "../Entity/FieldObject";
 import GamePreparePreviousState from "../Entity/GamePreparePreviousState";
 import GlobalStatesStoreEntity from "../Entity/GlobalStatesStoreEntity";
 import Color from "../Enum/Color";
+import PageEnum from "../Enum/PageEnum";
 import GameStateStore from "./GameStateStore";
 import PlayerInfoStore from "./PlayerInfoStore";
 
@@ -23,6 +24,7 @@ class GameStore {
     @action InitPage: any = () => {
         let previousState = sessionStorage.getItem(PrepareGameStorage);
         let playerJson = sessionStorage.getItem(PlayerListStorage);
+
         if (previousState !== null && playerJson !== null) {
             let playerList: PlayerInfoStore[] = JSON.parse(playerJson);
             let previousStateModel: GamePreparePreviousState = JSON.parse(previousState);
@@ -34,6 +36,7 @@ class GameStore {
                 this.GameSize = previousStateModel.fieldSize;
             }
         }
+
         this.FieldsArray = this.CreateFieldsArray(this.GameSize * this.GameSize);
         this.WinMatrix = this.SetWinMatrix();
     }
@@ -41,16 +44,6 @@ class GameStore {
     @observable GameState = new GameStateStore(undefined, false);
 
     @observable CurrentPlayer = 0;
-
-    @action IsGameStarted: any = () => {
-        let gameStateJson = sessionStorage.getItem(GameStateStorage);
-        if (gameStateJson === null) {
-            return false;
-        }
-        let gameState: GlobalStatesStoreEntity = JSON.parse(gameStateJson);
-
-        return gameState.isGameRun;
-    }
 
     @action CreateFieldsArray: any = (fieldsSize: number) => {
         const fieldCount = fieldsSize;

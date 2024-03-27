@@ -16,21 +16,6 @@ nav {
     text-align: center;
 }
 
-.link-button {
-    background-color: transparent;
-    color: grey;
-    border: unset;
-    font-size: 17px;
-}
-
-    .link-button:hover {
-        color: white;
-    }
-
-    .link-button.white {
-        color: white;
-    }
-
 .App-link {
   color: #61dafb;
 }

@@ -12,11 +12,10 @@ const Records = observer(() => {
     }
 
     useEffect(() => {
-        recordsStore.GetRecordList();
-
         // Required to change nav menu when changing the route in the browser.
-        globalStatesStore.SetPreviousState();
-        globalStatesStore.GoToRecordsPage();
+        globalStatesStore.InitRecordsPage();
+
+        recordsStore.GetRecordList();
     }, []);
 
     return (<>
