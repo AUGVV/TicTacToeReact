@@ -1,6 +1,7 @@
 import { startPageStore } from "../Stores/StartPageStore";
 import { useEffect, useRef } from "react";
 import { globalStatesStore } from '../Stores/GlobalStatesStore';
+
 import PlayersBar from './Components/StartPage/PlayersBar';
 import GameRuleBar from './Components/StartPage/GameRuleBar';
 

@@ -4,9 +4,10 @@ import { observer } from 'mobx-react';
 import { gameStore } from "../Stores/GameStore";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { globalStatesStore } from '../Stores/GlobalStatesStore';
+
 import WinField from './Components/GamePage/WinField';
 import GameField from './Components/GamePage/GameField';
-import { globalStatesStore } from '../Stores/GlobalStatesStore';
 
 const Game = observer(() => {
     const navigate = useNavigate();
