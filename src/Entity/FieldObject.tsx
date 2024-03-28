@@ -1,14 +1,16 @@
+import Color from "../Enum/Color";
+
 class FieldObject {
 	value: string;
 	player: string | null;
 	index: number | null;
-	colorClass?: string | null;
+	color: Color;
 
-	constructor(value: string, player: string | null, index: number, colorClass: string | null = null) {
+	constructor(value: string, player: string | null, index: number, color: Color) {
 		this.value = value;
 		this.player = player;
 		this.index = index;
-		this.colorClass = colorClass;
+		this.color = color;
 	}
 }
 
